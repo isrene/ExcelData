@@ -51,7 +51,7 @@ namespace EmpleadosMan.Controllers
 
                     List<Empleados> listaEmpleados = new List<Empleados>();
 
-                    //System.Array MyValues = (System.Array)MySheet.get_Range("A" + index.ToString(), "D" + index.ToString()).Cells.Value;
+                    
 
                     for (int i = 1; i <= range.Rows.Count; i++)
                     {
