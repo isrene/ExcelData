@@ -47,11 +47,15 @@ namespace EmpleadosMan.Controllers
                     Excel.Application application = new Excel.Application();
                     Excel.Workbook workBook = application.Workbooks.Open(path);
                     Excel.Worksheet hojaUnitech = workBook.Sheets[1];
-                    Excel.Range range = hojaUnitech.Range["C5", "E71"];
 
-                    List<Empleados> listaEmpleados = new List<Empleados>();
+                    string lastRowE = "E";
+                    lastRowE += LastRowPerColumn(5, hojaUnitech).ToString();
 
-                    
+                    Excel.Range range = hojaUnitech.Range["C5", lastRowE];
+
+
+                   List<Empleados> listaEmpleados = new List<Empleados>();
+
 
                     for (int i = 1; i <= range.Rows.Count; i++)
                     {
@@ -63,14 +67,14 @@ namespace EmpleadosMan.Controllers
                         string aMaterno = ((Excel.Range)range.Cells[i, 2]).Text;
                         string nombre = ((Excel.Range)range.Cells[i, 3]).Text;
 
-                        
+
                         emp.Nombre = ((aPaterno.ToUpper() + " " + aMaterno.ToUpper() + " " + nombre.ToUpper()));
-                        
+
                         emp.Empresa = ((Excel.Range)range.Cells[i, 5]).Text;
                         emp.FIngreso = ((Excel.Range)range.Cells[i, 6]).Text;
                         emp.AfiliadoIMSS = ((Excel.Range)range.Cells[i, 12]).Text;
                         emp.Estatus = ((Excel.Range)range.Cells[i, 13]).Text;
-                        string temp =  ((Excel.Range)range.Cells[i, 14]).Text  ;
+                        string temp = ((Excel.Range)range.Cells[i, 14]).Text;
 
                         string[] tokens = temp.Split('$');
                         emp.SDI = decimal.Parse(tokens[1]);
@@ -95,6 +99,24 @@ namespace EmpleadosMan.Controllers
                 }
 
             }
+        }
+
+
+        //Special thanks to Vitosh Doynov(vitoshacademy.com) helped me solve getting the last row from specific column, phew!
+        static int LastRowPerColumn(int column, Excel.Worksheet wks)
+        {
+            int lastRow = LastRowTotal(wks);
+            while (((wks.Cells[lastRow, column]).Text == "") && (lastRow != 1))
+            {
+                lastRow--;
+            }
+            return lastRow;
+        }
+
+        static int LastRowTotal(Excel.Worksheet wks)
+        {
+            Excel.Range lastCell = wks.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell, Type.Missing);
+            return lastCell.Row;
         }
     }
 }
