@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<h3>@ViewBag.Lista</h3>
+<span>Archivo Excel</span>
+@using (Html.BeginForm("Importar", "Empleados", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    
+    @Html.Raw(ViewBag.Error)
+    <input type="file" name="excelfile"  id="excelfile"  />
+    <br />
+    <input type="submit" value="Import" />
+}

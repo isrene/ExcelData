@@ -1,0 +1,37 @@
+﻿@model IEnumerable<EmpleadosMan.Models.Empleados>
+@{
+    ViewBag.Title = "Empleados";
+}
+
+<h3>Datos Empresa</h3>
+
+<table class="table">
+    <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Empresa</th>
+        <th>Fecha Ingreso</th>
+        <th>Afiliado IMSS</th>
+        <th>Estatus</th>
+        <th>SDI</th>
+        <th>NSS/IMSS</th>
+        <th>CURP</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Cont</td>
+        <td>@item.Nombre</td>
+        <td>@item.Empresa</td>
+        <td>@item.FIngreso</td>
+        <td>@item.AfiliadoIMSS</td>
+        <td>@item.Estatus</td>
+        <td>$@item.SDI</td>
+        <td>@item.NSS</td>
+        <td>@item.CURP</td>
+    </tr>
+    }
+
+</table>
+
